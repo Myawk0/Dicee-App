@@ -9,7 +9,7 @@ import UIKit
 
 class DiceController: UIViewController {
     
-    // MARK: - Views
+    // MARK: - Properties
     
     private let diceView: DiceView
     private let dices = Dice.dices
@@ -35,6 +35,8 @@ class DiceController: UIViewController {
         diceView.delegate = self
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "LightToDark")
@@ -43,11 +45,23 @@ class DiceController: UIViewController {
         setupDiceNames()
     }
     
+    // MARK: - Catch shaking of phone
+
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            diceView.setupDicesValues()
+        }
+    }
+    
+    // MARK: - Create an array of dices images in view
+    
     func setupDiceNames() {
         for dice in dices {
             diceView.setupDices(with: dice.image!)
         }
     }
+    
+    // MARK: - Change size of score value and setup it in view
     
     func setupScore(_ score: Int) {
         let scoreString = "Score:  \(score)"
@@ -58,6 +72,8 @@ class DiceController: UIViewController {
         }
         diceView.setupScore(with: attributedScore)
     }
+    
+    // MARK: - Sum of dices values
     
     func calculateDiceScore(firstDice: Int, secondDice: Int) -> Int  {
         return firstDice + secondDice

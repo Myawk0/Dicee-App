@@ -78,12 +78,16 @@ class DiceView: UIView {
         return value
     }
     
-    // MARK: - Method tapping on Roll button
-    
-    @objc private func rollButtonTapped(_ sender: UIButton) {
+    func setupDicesValues() {
         if let firstValue = animateDiceRoll(firstDiceImageView), let secondValue = animateDiceRoll(secondDiceImageView) {
             delegate?.rollButtonIsTapped(firstValue: firstValue, secondValue: secondValue)
         }
+    }
+    
+    // MARK: - Method tapping on Roll button
+    
+    @objc private func rollButtonTapped(_ sender: UIButton) {
+        setupDicesValues()
     }
     
     // MARK: - Subviews
